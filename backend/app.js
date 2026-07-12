@@ -16,6 +16,7 @@ const cors = require("cors");
 
 // Import newly integrated sub-routing matrices
 const authRoutes = require('./routes/authRoutes');
+console.log("✅ authRoutes loaded");
 const candidateRoutes = require('./routes/candidateRoutes');
 const dashboardRoutes = require("./routes/dashboardRoutes");
 
@@ -62,6 +63,7 @@ app.get("/", (req, res) => {
 // ===============================
 // 5.5 Active Module Routing Matrix
 // ===============================
+console.log("✅ Mounting /api/auth");
 app.use('/api/auth', authRoutes);
 app.use('/api/candidates', candidateRoutes);
 app.use('/api/jobs', jobRoutes);
