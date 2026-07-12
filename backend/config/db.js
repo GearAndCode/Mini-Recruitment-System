@@ -10,13 +10,11 @@ require("dotenv").config();
 
 const { Pool } = require("pg");
 
-// Debug: Print connection settings (except password)
-console.log("========== DATABASE CONFIG ==========");
-console.log({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    database: process.env.DB_NAME,
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 console.log("=====================================");
 console.log("DB_HOST =", process.env.DB_HOST);
