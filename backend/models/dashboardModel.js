@@ -39,10 +39,10 @@ const getStats = async () => {
  */
 const getRecentCandidates = async () => {
   const query = `
-    SELECT id, name, position, experience, status, created_at
-    FROM candidates
-    ORDER BY created_at DESC
-    LIMIT 5
+ SELECT id, full_name, position, status, created_at
+FROM candidates
+ORDER BY created_at DESC
+LIMIT 5
   `;
   const result = await pool.query(query);
   return result.rows;
@@ -54,10 +54,10 @@ const getRecentCandidates = async () => {
  */
 const getRecentJobs = async () => {
   const query = `
-    SELECT id, title, dept, loc, salary, status, created_at
-    FROM jobs
-    ORDER BY created_at DESC
-    LIMIT 5
+  SELECT id, title, department, location, salary, status, created_at
+FROM jobs
+ORDER BY created_at DESC
+LIMIT 5
   `;
   const result = await pool.query(query);
   return result.rows;
