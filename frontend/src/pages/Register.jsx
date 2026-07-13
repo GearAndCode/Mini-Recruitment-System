@@ -67,7 +67,8 @@ export default function Register() {
     e.preventDefault();
     if (!validateForm() || loading) return;
 
-setLoading(true);    setServerError('');
+    setLoading(true);
+    setServerError('');
 
     try {
       // Outbound REST Payload Structure matching requirements
