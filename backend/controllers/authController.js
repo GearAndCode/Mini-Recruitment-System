@@ -67,14 +67,13 @@ const register = async (req, res) => {
         });
 
     } catch (error) {
-        console.error("Pipeline Exception caught within authController.register:", error);
+    console.error(error);
 
-        // Sanitize error payloads to ensure downstream database footprints don't expose system paths
-        return res.status(500).json({
-            success: false,
-            message: 'Internal server initialization fault during identity persistence.'
-        });
-    }
+    return res.status(500).json({
+        success: false,
+        message: error.message
+    });
+}
 };
 
 /**
