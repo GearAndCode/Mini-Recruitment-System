@@ -14,9 +14,10 @@ async function testConnection() {
     await pool.query("SELECT NOW()");
     console.log("✅ PostgreSQL Connected Successfully");
   } catch (err) {
-    console.error("❌ Database Connection Failed");
-    console.error(err.message);
-  }
+  console.error("❌ Database Connection Failed");
+  console.error(err);
+  throw err;
+}
 }
 
 testConnection();
