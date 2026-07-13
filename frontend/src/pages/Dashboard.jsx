@@ -69,9 +69,9 @@ export default function Dashboard() {
           API.get('/applications')
         ]);
 
-       setCandidates(candidatesRes.data.candidates || []);
-setJobs(jobsRes.data.jobs || []);
-setApplications(applicationsRes.data.applications || []);
+      setCandidates(candidatesRes.data.data || candidatesRes.data.candidates || []);
+setJobs(jobsRes.data.data || jobsRes.data.jobs || []);
+setApplications(applicationsRes.data.data || applicationsRes.data.applications || []);
       } catch (err) {
         setError("System failed to establish an active synchronization handshake with runtime microservices.");
       } finally {
