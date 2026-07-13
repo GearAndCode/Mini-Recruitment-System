@@ -37,14 +37,14 @@ const createApplication = async (candidate_id, job_id, notes) => {
  */
 const getAllApplications = async () => {
     const query = `
-      SELECT
-    a.id,
-    a.candidate_id,
-    c.full_name AS candidate_name,
-    c.email,
-    c.phone,
-    c.experience,
-    a.job_id,
+  SELECT
+a.id,
+a.candidate_id,
+c.full_name AS candidate_name,
+c.email,
+c.phone,
+c.position,
+a.job_id,
     j.title AS job_title,
     a.status,
     a.notes,
@@ -74,14 +74,14 @@ ORDER BY a.applied_at DESC;
  */
 const getApplicationById = async (id) => {
     const query = `
-      SELECT
-    a.id,
-    a.candidate_id,
-    c.full_name AS candidate_name,
-    c.email,
-    c.phone,
-    c.experience,
-    a.job_id,
+   SELECT
+a.id,
+a.candidate_id,
+c.full_name AS candidate_name,
+c.email,
+c.phone,
+c.position,
+a.job_id,
     j.title AS job_title,
     a.status,
     a.notes,
