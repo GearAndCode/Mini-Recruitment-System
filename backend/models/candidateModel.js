@@ -17,13 +17,33 @@ const pool = require('../config/db');
  * @param {string} resume_link - URL string referencing the candidate's resume asset
  * @returns {Promise<Object>} The newly created candidate row record
  */
-const createCandidate = async (full_name, email, phone, position, experience, resume_link) => {
+const createCandidate = async (
+    full_name,
+    email,
+    phone,
+    position,
+    resume_url
+) => {
     const query = `
-        INSERT INTO candidates (full_name, email, phone, position, experience, resume_link, status, created_at, updated_at)
-        VALUES ($1, $2, $3, $4, $5, $6, 'Applied', NOW(), NOW())
-        RETURNING *;
+      INSERT INTO candidates (
+full_name,
+email,
+phone,
+position,
+resume_url,
+status,
+created_at,
+updated_at
+)
+VALUES ($1,$2,$3,$4,$5,'Applied',NOW(),NOW())
     `;
-    const values = [full_name, email, phone, position, experience, resume_link];
+    const values = [
+full_name,
+email,
+phone,
+position,
+resume_url
+];
 
     try {
         const { rows } = await pool.query(query, values);
@@ -40,8 +60,8 @@ const createCandidate = async (full_name, email, phone, position, experience, re
  */
 const getAllCandidates = async () => {
     const query = `
-        SELECT id, full_name, email, phone, position, experience, resume_link, status, created_at, updated_at
-        FROM candidates
+       SELECT id, full_name, email, phone, position, resume_url, status, created_at, updated_at
+FROM candidates
         ORDER BY created_at DESC;
     `;
 
@@ -61,8 +81,8 @@ const getAllCandidates = async () => {
  */
 const getCandidateById = async (id) => {
     const query = `
-        SELECT id, full_name, email, phone, position, experience, resume_link, status, created_at, updated_at
-        FROM candidates
+      SELECT id, full_name, email, phone, position, resume_url, status, created_at, updated_at
+FROM candidates
         WHERE id = $1;
     `;
 
@@ -84,9 +104,13 @@ const getCandidateById = async (id) => {
 const updateCandidateStatus = async (id, status) => {
     const query = `
         UPDATE candidates
-        SET status = $2, updated_at = NOW()
-        WHERE id = $1
-        RETURNING *;
+      SET
+full_name=$2,
+email=$3,
+phone=$4,
+position=$5,
+resume_url=$6,
+status=$7
     `;
     const values = [id, status];
 
@@ -118,8 +142,15 @@ const updateCandidate = async (id, full_name, email, phone, position, experience
         WHERE id = $1
         RETURNING *;
     `;
-    const values = [id, full_name, email, phone, position, experience, resume_link, status];
-
+const values=[
+id,
+full_name,
+email,
+phone,
+position,
+resume_url,
+status
+];
     try {
         const { rows } = await pool.query(query, values);
         return rows[0] || null;
