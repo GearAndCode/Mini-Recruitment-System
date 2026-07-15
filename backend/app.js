@@ -39,13 +39,13 @@ const app = express();
 const corsOptions = {
   origin: [
     "http://localhost:5173",
+    "https://mini-recruitment-system-ea1i60wk4-gearandcodes-projects.vercel.app",
     "https://mini-recruitment-system-nludb9rz0-gearandcodes-projects.vercel.app"
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
 };
-
 app.use(cors(corsOptions));
 // Parse JSON request bodies
 app.use(express.json());
