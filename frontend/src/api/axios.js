@@ -4,4 +4,15 @@ const API = axios.create({
   baseURL: "https://mini-recruitment-system-production.up.railway.app/api",
 });
 
+// Automatically attach JWT token
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+});
+
 export default API;
