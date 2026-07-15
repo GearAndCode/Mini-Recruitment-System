@@ -15,8 +15,7 @@ const jwt = require('jsonwebtoken');
 const authenticateToken = (req, res, next) => {
     try {
         // 1. Extract the Authorization header mapping
-        const authHeader = req.headers['authorization'];
-        
+const authHeader = req.headers['authorization'];        
         // 2. Structural Condition Check: Ensure header exists and conforms to standard naming
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
             return res.status(401).json({
