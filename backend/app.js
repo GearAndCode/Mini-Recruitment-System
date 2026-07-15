@@ -1,6 +1,3 @@
-const applicationRoutes = require('./routes/applicationRoutes');
-const jobRoutes = require('./routes/jobRoutes');
-
 /**
  * @file app.js
  * @description Core Express application configuration.
@@ -14,16 +11,18 @@ const jobRoutes = require('./routes/jobRoutes');
 const express = require("express");
 const cors = require("cors");
 
-// Import newly integrated sub-routing matrices
-const authRoutes = require('./routes/authRoutes');
-console.log("✅ authRoutes loaded");
-const candidateRoutes = require('./routes/candidateRoutes');
+// Import Routes
+const authRoutes = require("./routes/authRoutes");
+const candidateRoutes = require("./routes/candidateRoutes");
+const applicationRoutes = require("./routes/applicationRoutes");
+const jobRoutes = require("./routes/jobRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
+
+console.log("✅ authRoutes loaded");
 
 // ===============================
 // 2. Database Connection
 // ===============================
-// This automatically connects to PostgreSQL when the app starts.
 require("./config/db");
 
 // ===============================
@@ -35,64 +34,60 @@ const app = express();
 // 4. Global Middleware
 // ===============================
 
-// Enable Cross-Origin Resource Sharing (CORS)
-const corsOptions = {
-  origin: [
-    "http://localhost:5173",
-    "https://mini-recruitment-system-ea1i60wk4-gearandcodes-projects.vercel.app",
-    "https://mini-recruitment-system-nludb9rz0-gearandcodes-projects.vercel.app"
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true,
-};
-app.use(cors(corsOptions));
-// Parse JSON request bodies
+// Enable CORS
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+// Handle preflight requests
+app.options(/.*/, cors());
+
+// Parse JSON
 app.use(express.json());
 
-// Parse URL-encoded request bodies
+// Parse URL Encoded
 app.use(express.urlencoded({ extended: true }));
 
 // ===============================
-// 5. Health Check Route
+// 5. Health Check
 // ===============================
-
-/**
- * @route   GET /
- * @desc    API Health Check
- * @access  Public
- */
 app.get("/", (req, res) => {
-    res.status(200).json({
-        success: true,
-        message: "Mini Recruitment Workflow System API is running."
-    });
+  res.status(200).json({
+    success: true,
+    message: "Mini Recruitment Workflow System API is running.",
+  });
 });
 
 // ===============================
-// 5.5 Active Module Routing Matrix
+// 6. API Routes
 // ===============================
 console.log("✅ Mounting /api/auth");
-app.use('/api/auth', authRoutes);
-app.use('/api/candidates', candidateRoutes);
-app.use('/api/jobs', jobRoutes);
+
+app.use("/api/auth", authRoutes);
+app.use("/api/candidates", candidateRoutes);
+app.use("/api/jobs", jobRoutes);
+
 console.log("Applications route loaded");
-app.use('/api/applications', applicationRoutes);
+
+app.use("/api/applications", applicationRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 
 // ===============================
-// 6. 404 Route Handler
+// 7. 404 Handler
 // ===============================
-
 app.use((req, res) => {
-    res.status(404).json({
-        success: false,
-        message: "Route not found."
-    });
+  res.status(404).json({
+    success: false,
+    message: "Route not found.",
+  });
 });
 
 // ===============================
-// 7. Export Express App
+// 8. Export App
 // ===============================
-
 module.exports = app;
