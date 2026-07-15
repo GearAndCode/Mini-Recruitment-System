@@ -31,7 +31,7 @@ const server = app.listen(PORT, () => {
  */
 process.on('unhandledRejection', (err) => {
     console.error("🔴 FULL ERROR:");
-    console.error(err);s
+    console.error(err);
     // Gracefully shut down the server, allowing existing connections to wrap up
     server.close(() => {
         process.exit(1);
