@@ -30,7 +30,8 @@ const server = app.listen(PORT, () => {
  * Example: Database connection failures that aren't caught explicitly elsewhere.
  */
 process.on('unhandledRejection', (err) => {
-    console.error(`🔴 Unhandled Rejection Error: ${err.message}`);
+    console.error("🔴 FULL ERROR:");
+    console.error(err);s
     // Gracefully shut down the server, allowing existing connections to wrap up
     server.close(() => {
         process.exit(1);
